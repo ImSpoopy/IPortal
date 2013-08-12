@@ -21,14 +21,21 @@ public class SetToCmd extends BaseCmd {
 		String name = args[1];
 		for (Portal p : plugin.portals) {
 			if (p.getName().equalsIgnoreCase(name)) {
-				PortalType type = IP.data.getType(name);
-				String data = IP.data.compressLoc(player.getLocation());
-
+				PortalType type = p.getType();
+				String data = "";
+				
+				if (type == PortalType.BUNGEE) {
+					data = args[2];
+				} else if (type == PortalType.DEFAULT) {
+					data = IP.data.compressLoc(player.getLocation());
+				} else {
+					return false;
+				}
+				
 				if (type == PortalType.BUNGEE && args.length <= 2) {
 					Util.msg(player,  "&aPlease include the server's name for bungeecord!");
 					return true;
 				}
-				data = convert(type);
 
 				p.setTarget(data);
 				IP.data.getConfig().set("portals." + name + ".tpto", data);
@@ -41,13 +48,5 @@ public class SetToCmd extends BaseCmd {
 		}
 		Util.msg(player, "&c" + name + " is not a valid portal!");
 		return true;
-	}
-
-	private String convert(PortalType type) {
-		switch(type) {
-		case DEFAULT: return IP.data.compressLoc(player.getLocation());
-		case BUNGEE: return args[2];
-		}
-		return IP.data.compressLoc(player.getLocation());
 	}
 }

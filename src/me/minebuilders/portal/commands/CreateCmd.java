@@ -34,6 +34,7 @@ public class CreateCmd extends BaseCmd {
 			} else {
 				PortalType type = IP.data.getType(args[2]);
 				if (type == null) {
+					Util.msg(player, "&cWrong portal type, defaulting to DEFAULT");
 					type = PortalType.DEFAULT;
 				}
 				Location l = st.getLoc1();

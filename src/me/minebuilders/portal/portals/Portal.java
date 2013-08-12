@@ -2,7 +2,6 @@ package me.minebuilders.portal.portals;
 
 import me.minebuilders.portal.Bound;
 import me.minebuilders.portal.Status;
-import me.minebuilders.portal.Util;
 import me.minebuilders.portal.tasks.PortalCreation;
 
 import org.bukkit.Bukkit;
@@ -24,7 +23,6 @@ public class Portal {
 
 	public void setTarget(String s) {
 		String[] h = s.split(":");
-		Util.log(s);
 		this.tpto = new Location(Bukkit.getServer().getWorld(h[0]), Integer.parseInt(h[1]) + 0.5, Integer.parseInt(h[2]), Integer.parseInt(h[3]) + 0.5, Float.parseFloat(h[4]), Float.parseFloat(h[5]));
 	}
 
