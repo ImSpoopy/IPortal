@@ -81,10 +81,13 @@ public class Data {
 				try {
 					Portal p = (Portal) type.getPortal().newInstance(s, b, status);
 					plugin.portals.add(p);
-					if (!exit.equals("")) p.setTarget(exit); //Set the target after the constructor, more easy this way
+					if (exit != null && !exit.equals("")) {
+						p.setTarget(exit); //Set the target after the constructor, more easy this way
+					} else {
+						p.setStatus(Status.BROKEN);
+					}
 				} catch (Exception e) { 
 					Util.warning("Unable to load portal " + s + "!"); 
-					e.printStackTrace();
 				}
 			}
 		}
