@@ -1,0 +1,8 @@
+name: IPortal
+author: bob7l
+description: A Simple, fun, Portal plugin
+version: 1.0
+main: me.minebuilders.portal.IP
+commands:
+  iportal:
+    description: IPortal's base command
