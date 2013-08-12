@@ -6,7 +6,7 @@ import me.minebuilders.portal.Bound;
 import me.minebuilders.portal.Status;
 
 public enum PortalType {
-	DEFAULT(Portal.class), BUNGEE(BungeePortal.class);
+	DEFAULT(Portal.class), BUNGEE(BungeePortal.class), RANDOM(RandomPortal.class);
 
 	private Class<?> con;
 

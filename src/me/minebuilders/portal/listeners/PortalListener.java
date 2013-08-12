@@ -15,8 +15,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 
 public class PortalListener implements Listener {
@@ -32,7 +34,7 @@ public class PortalListener implements Listener {
 	@EventHandler
 	public void onTeleport(PlayerPortalEvent event) {
 		Player p = event.getPlayer();
-		Location l = getNearPortal(p.getLocation());
+		Location l = getNearLoc(Material.PORTAL, p.getLocation());
 		for (Portal portal : plugin.portals) {
 			if (portal.isInRegion(l)) {
 				event.setCancelled(true);
@@ -45,7 +47,7 @@ public class PortalListener implements Listener {
 		Entity e = event.getEntity();
 		if (e instanceof Player) { 
 			final Player p = (Player)e;
-			Location l = getNearPortal(p.getLocation());
+			Location l = getNearLoc(Material.PORTAL, p.getLocation());
 			for (final Portal portal : plugin.portals) {
 				if (portal.isInRegion(l)) {
 					if (!delays.contains(p.getName())) {
@@ -76,11 +78,24 @@ public class PortalListener implements Listener {
 		}, 30L);
 	}
 
-	private Location getNearPortal(Location l) {
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPlayerjoin(PlayerJoinEvent event) {
+		Player p = event.getPlayer();
+		Block b = p.getWorld().getBlockAt(p.getLocation()); 
+
+		for(BlockFace face: faces) {
+			if (b.getRelative(face).getType().equals(Material.PORTAL)) {
+				p.teleport(getNearLoc(Material.AIR, b.getLocation()));
+			}
+		}
+	}
+
+	private Location getNearLoc(Material mat, Location l) {
 		Block b = l.getBlock();
 		for (BlockFace bf : faces) {
 			Block rel = b.getRelative(bf);
-			if (rel.getType() == Material.PORTAL) {
+			if (rel.getType() == mat) {
 				return rel.getLocation();
 			}
 		}

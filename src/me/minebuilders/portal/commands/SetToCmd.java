@@ -1,5 +1,7 @@
 package me.minebuilders.portal.commands;
 
+import org.bukkit.ChatColor;
+
 import me.minebuilders.portal.IP;
 import me.minebuilders.portal.Status;
 import me.minebuilders.portal.Util;
@@ -24,13 +26,16 @@ public class SetToCmd extends BaseCmd {
 				PortalType type = p.getType();
 				String data = "";
 				
-				Util.log(name);
-				Util.log(type.name());
 				if (type == PortalType.BUNGEE && args.length >= 3) {
 					data = args[2];
 				} else if (type == PortalType.DEFAULT) {
 					data = IP.data.compressLoc(player.getLocation());
+				} else if (type == PortalType.RANDOM && args.length >= 3) {
+					if (Util.isInt(args[2])) {
+						data = args[2];
+					}
 				} else {
+					player.sendMessage(ChatColor.RED + "Wrong arguments for this portal type!");
 					return false;
 				}
 

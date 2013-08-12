@@ -16,7 +16,6 @@ public class BungeePortal extends Portal {
 
 	public BungeePortal(String name, Bound region, Status status) {
 		super(name, region, status);
-
 	}
 
 	@Override
