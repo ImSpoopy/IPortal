@@ -10,14 +10,13 @@ public class BungeePortal extends Portal {
 
 	private String server;
 
-	public BungeePortal(String name, String tpto, Bound region, Status status) {
-		super(name, "", region, status);
-		this.server = tpto;
+	public BungeePortal(String name, Bound region, Status status) {
+		super(name, region, status);
 	}
 
 	@Override
 	public void Teleport(Player p) {
-		p.sendPluginMessage(IP.instance, "iportal", (server).getBytes());
+		p.sendPluginMessage(IP.instance, "BungeeCord", (server).getBytes());
 	}
 
 	@Override

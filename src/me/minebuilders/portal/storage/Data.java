@@ -10,7 +10,6 @@ import me.minebuilders.portal.Util;
 import me.minebuilders.portal.portals.Portal;
 import me.minebuilders.portal.portals.PortalType;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -61,7 +60,7 @@ public class Data {
 		if (new File(plugin.getDataFolder(), "portals.yml").exists()) {
 			for (String s : data.getConfigurationSection("portals").getKeys(false)) {
 				Status status = Status.RUNNING;
-				String exit = null;
+				String exit = "";
 				Bound b = null;
 				PortalType type = PortalType.DEFAULT;
 
@@ -80,9 +79,12 @@ public class Data {
 					status = Status.BROKEN;
 				}
 				try {
-					plugin.portals.add((Portal) type.getPortal().newInstance(s, exit, b, status));
+					Portal p = (Portal) type.getPortal().newInstance(s, b, status);
+					plugin.portals.add(p);
+					if (!exit.equals("")) p.setTarget(exit); //Set the target after the constructor, more easy this way
 				} catch (Exception e) { 
 					Util.warning("Unable to load portal " + s + "!"); 
+					e.printStackTrace();
 				}
 			}
 		}
@@ -90,11 +92,6 @@ public class Data {
 
 	public int BC(String s, String st) {
 		return data.getInt("portals." + s + "." + st);
-	}
-
-	public Location uncompressLoc(String s) {
-		String[] h = s.split(":");
-		return new Location(Bukkit.getServer().getWorld(h[0]), Integer.parseInt(h[1]) + 0.5, Integer.parseInt(h[2]), Integer.parseInt(h[3]) + 0.5, Float.parseFloat(h[4]), Float.parseFloat(h[5]));
 	}
 
 	public String compressLoc(Location l) {

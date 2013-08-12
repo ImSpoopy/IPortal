@@ -53,7 +53,7 @@ public class CreateCmd extends BaseCmd {
 				Bound b = new Bound(player.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ(), l2.getBlockX(), l2.getBlockY(), l2.getBlockZ());
 				new PortalCreation(b);
 				try {
-					plugin.portals.add((Portal) type.getPortal().newInstance(new Portal(s, "", b, Status.NOT_READY)));
+					plugin.portals.add((Portal) type.getPortal().newInstance(s, b, Status.NOT_READY));
 				} catch (Exception e) {
 					Util.msg(player, "&cFailed to add portal to local list!");
 					e.printStackTrace();

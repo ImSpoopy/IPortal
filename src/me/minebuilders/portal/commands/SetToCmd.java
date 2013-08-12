@@ -24,7 +24,7 @@ public class SetToCmd extends BaseCmd {
 				PortalType type = IP.data.getType(name);
 				String data = IP.data.compressLoc(player.getLocation());
 
-				if (type == PortalType.BUNGEE && args[2] == null) {
+				if (type == PortalType.BUNGEE && args.length <= 2) {
 					Util.msg(player,  "&aPlease include the server's name for bungeecord!");
 					return true;
 				}

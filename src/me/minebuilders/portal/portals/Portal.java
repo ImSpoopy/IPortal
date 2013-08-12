@@ -1,11 +1,11 @@
 package me.minebuilders.portal.portals;
 
 import me.minebuilders.portal.Bound;
-import me.minebuilders.portal.IP;
 import me.minebuilders.portal.Status;
 import me.minebuilders.portal.Util;
 import me.minebuilders.portal.tasks.PortalCreation;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -16,17 +16,16 @@ public class Portal {
 	private Bound region;
 	private Status status;
 
-	public Portal(String name, String tpto, Bound region, Status status) {
-		Util.log("one");
-		if (!tpto.equals("")) this.tpto = IP.data.uncompressLoc(tpto);
+	public Portal(String name, Bound region, Status status) {
 		this.name = name;
 		this.region = region;
 		this.status = status;
-		Util.log("two");
 	}
 
 	public void setTarget(String s) {
-		this.tpto = IP.data.uncompressLoc(s);
+		String[] h = s.split(":");
+		Util.log(s);
+		this.tpto = new Location(Bukkit.getServer().getWorld(h[0]), Integer.parseInt(h[1]) + 0.5, Integer.parseInt(h[2]), Integer.parseInt(h[3]) + 0.5, Float.parseFloat(h[4]), Float.parseFloat(h[5]));
 	}
 
 	public void setStatus(Status status) {

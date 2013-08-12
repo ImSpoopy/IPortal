@@ -22,7 +22,7 @@ public class IP extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		data = new Data(this);
-		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "iportal");
+	    Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		getCommand("iportal").setExecutor(new CommandListener());
 		getServer().getPluginManager().registerEvents(new WandListener(this), this);
 		getServer().getPluginManager().registerEvents(new PortalListener(this), this);
