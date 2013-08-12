@@ -33,10 +33,6 @@ public class CreateCmd extends BaseCmd {
 				Util.msg(player, ChatColor.RED + "You need to make a selection before making an arena!");	
 			} else {
 				PortalType type = IP.data.getType(args[2]);
-				if (type == null) {
-					Util.msg(player, "&cWrong portal type, defaulting to DEFAULT");
-					type = PortalType.DEFAULT;
-				}
 				Location l = st.getLoc1();
 				Location l2 = st.getLoc2();
 				String s = args[1];
@@ -57,7 +53,6 @@ public class CreateCmd extends BaseCmd {
 					plugin.portals.add((Portal) type.getPortal().newInstance(s, b, Status.NOT_READY));
 				} catch (Exception e) {
 					Util.msg(player, "&cFailed to add portal to local list!");
-					e.printStackTrace();
 					return true;
 				}
 				Util.msg(player, "You created portal " + s + "!");
