@@ -65,8 +65,8 @@ public class Data {
 				PortalType type = PortalType.DEFAULT;
 
 				try {
-					exit = data.getString("portals." + s + ".tpto");
 					type = getType(data.getString("portals." + s + ".type"));
+					exit = data.getString("portals." + s + ".tpto");
 				} catch (Exception e) { 
 					Util.warning("Unable to load teleport location for portal " + s + "!"); 
 					status = Status.BROKEN;
