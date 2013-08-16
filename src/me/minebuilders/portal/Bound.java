@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 public class Bound {
 
@@ -17,6 +18,8 @@ public class Bound {
 	private int y2;
 	private int z2;
 	private World world;
+	private Vector v1;
+	private Vector v2;
 
 	public Bound(String world, int x, int y, int z, int x2, int y2, int z2) {
 		this.world = Bukkit.getWorld(world);
@@ -26,14 +29,13 @@ public class Bound {
 		this.x2 = Math.max(x,x2);
 		this.y2 = Math.max(y, y2);
 		this.z2 = Math.max(z, z2);
+		this.v1 = new Location(this.world, this.x,this.y,this.z).toVector();
+		this.v2 = new Location(this.world, this.x2,this.y2,this.z2).toVector();
 	}
 
 	public boolean isInRegion(Location loc) {
 		if (!loc.getWorld().equals(world)) return false;
-		int cx = loc.getBlockX();
-		int cy = loc.getBlockY();
-		int cz = loc.getBlockZ();
-		if ((cx > x - 1 && cx < x2 + 1) && (cy > y - 1 && cy < y2 + 1) && (cz > z  - 1&& cz < z2 + 1)) {
+		if (loc.toVector().isInAABB(v1, v2)) {
 			return true;
 		}
 		return false;
