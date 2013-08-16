@@ -21,16 +21,16 @@ public class ToggleCmd extends BaseCmd {
 		for (Portal p : plugin.portals) {
 			if (p.getName().equalsIgnoreCase(name)) {
 				if (p.getStatus() == Status.RUNNING) {
-					Util.msg(player, "&a" + name + " is now &cLOCKED&a!");
+					Util.msg(sender, "&a" + name + " is now &cLOCKED&a!");
 					p.setStatus(Status.NOT_READY);
 				} else {
-					Util.msg(player, "&a" + name + " is now &2UNLOCKED&a!");
+					Util.msg(sender, "&a" + name + " is now &2UNLOCKED&a!");
 					p.setStatus(Status.RUNNING);
 				}
 				return true;
 			}
 		}
-		Util.msg(player, "&c" + name + " is not a valid portal!");
+		Util.msg(sender, "&c" + name + " is not a valid portal!");
 		return true;
 	}
 }
