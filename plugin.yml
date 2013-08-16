@@ -3,7 +3,7 @@ author: bob7l
 description: A Simple, fun, Portal plugin
 version: 1.0
 main: me.minebuilders.portal.IP
-softdepend: [Multiverse-Core]
+softdepend: [Multiverse-Core, MultiWorld]
 commands:
   iportal:
     description: IPortal's base command
