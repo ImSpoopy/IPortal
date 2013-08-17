@@ -33,9 +33,8 @@ public class Bound {
 		this.v2 = new Location(this.world, this.x2,this.y2,this.z2).toVector();
 	}
 
-	public boolean isInRegion(Location loc) {
-		if (!loc.getWorld().equals(world)) return false;
-		if (loc.toVector().isInAABB(v1, v2)) {
+	public boolean isInRegion(Vector l) {
+		if (l.isInAABB(v1, v2)) {
 			return true;
 		}
 		return false;

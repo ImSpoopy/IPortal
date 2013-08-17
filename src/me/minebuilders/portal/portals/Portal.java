@@ -7,6 +7,7 @@ import me.minebuilders.portal.tasks.PortalCreation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class Portal {
 
@@ -42,7 +43,7 @@ public class Portal {
 		return this.name;
 	}
 
-	public boolean isInRegion(Location l) {
+	public boolean isInRegion(Vector l) {
 		return region.isInRegion(l);
 	}
 

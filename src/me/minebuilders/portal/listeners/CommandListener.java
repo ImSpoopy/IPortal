@@ -23,6 +23,7 @@ public class CommandListener implements CommandExecutor {
 		cmds.add(new DeleteCmd());
 		cmds.add(new ToggleCmd());
 		cmds.add(new ListCmd());
+		cmds.add(new TpCmd());
 	}
 
 	public boolean onCommand(CommandSender s, Command command, String label, String[] args) {

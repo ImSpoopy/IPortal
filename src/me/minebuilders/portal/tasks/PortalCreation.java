@@ -31,7 +31,7 @@ public class PortalCreation implements Runnable, Listener {
 
 	@EventHandler
 	public void onPortalBreak(BlockPhysicsEvent event) {
-		if (event.getBlock().getType() == Material.PORTAL && b.isInRegion(event.getBlock().getLocation())) {
+		if (event.getBlock().getType() == Material.PORTAL && b.isInRegion(event.getBlock().getLocation().toVector())) {
 			event.setCancelled(true);
 		}
 	}

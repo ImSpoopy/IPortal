@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.util.Vector;
 
 public class PortalListener implements Listener {
 	private IP plugin;
@@ -34,7 +35,7 @@ public class PortalListener implements Listener {
 	@EventHandler
 	public void onTeleport(PlayerPortalEvent event) {
 		Player p = event.getPlayer();
-		Location l = getNearLoc(Material.PORTAL, p.getLocation());
+		Vector l = getNearLoc(Material.PORTAL, p.getLocation()).toVector();
 		for (Portal portal : plugin.portals) {
 			if (portal.isInRegion(l)) {
 				event.setCancelled(true);
@@ -47,7 +48,7 @@ public class PortalListener implements Listener {
 		Entity e = event.getEntity();
 		if (e instanceof Player) { 
 			final Player p = (Player)e;
-			Location l = getNearLoc(Material.PORTAL, p.getLocation());
+			Vector l = getNearLoc(Material.PORTAL, p.getLocation()).toVector();
 			for (final Portal portal : plugin.portals) {
 				if (portal.isInRegion(l)) {
 					if (!delays.contains(p.getName())) {
