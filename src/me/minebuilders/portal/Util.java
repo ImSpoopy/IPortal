@@ -39,4 +39,15 @@ public class Util {
 		} catch (NumberFormatException e) { return false; }
 		return true;
 	}
+	
+	public static String trim(String[] args, int minArgs) {
+		String message = "";
+		int maxArgs = 99;
+		for (int i = 0; i < args.length; i++) {
+			if ((i > minArgs) && (i < maxArgs)) {
+				message = message + args[i] + " ";
+			}
+		}
+		return message;
+	}
 }

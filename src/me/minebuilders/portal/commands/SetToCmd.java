@@ -26,8 +26,8 @@ public class SetToCmd extends BaseCmd {
 				PortalType type = p.getType();
 				String data = "";
 				
-				if (type == PortalType.BUNGEE && args.length >= 3) {
-					data = args[2];
+				if ((type == PortalType.BUNGEE || type == PortalType.CMD) && args.length >= 3) {
+					data = Util.trim(args, 1);
 				} else if (type == PortalType.DEFAULT) {
 					data = IP.data.compressLoc(player.getLocation());
 				} else if (type == PortalType.RANDOM && args.length >= 3) {
