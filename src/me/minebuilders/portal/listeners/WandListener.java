@@ -15,11 +15,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class WandListener implements Listener {
 	private IP plugin;
-
 	public WandListener(IP instance) {
 		plugin = instance;
 	}
-
 	@EventHandler
 	public void onSelection(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
@@ -27,27 +25,24 @@ public class WandListener implements Listener {
 			if (p.getItemInHand().getType() == Material.BLAZE_ROD && plugin.playerses.containsKey(p.getName())) {
 				Location l = event.getClickedBlock().getLocation();
 				PlayerSession ses = plugin.playerses.get(p.getName());
-				ses.setLoc1(l);
-
-				Util.msg(p, "Pos1: "+l.getX()+", "+l.getY()+", "+l.getZ());
+				ses.setLoc2(l);
+				Util.msg(p, "Pos2: "+l.getX()+", "+l.getY()+", "+l.getZ());
 				if (!ses.hasValidSelection()) {
-					Util.msg(p, "Now you need to set position 2!");
+					Util.msg(p, "Now you need to set position 1!");
 				}
 			}
 		}
 	}
-
 	@EventHandler
 	public void onSelection(BlockBreakEvent event) {
 		Player p = event.getPlayer();
 		if (p.getItemInHand().getType() == Material.BLAZE_ROD && plugin.playerses.containsKey(p.getName())) {
 			Location l = event.getBlock().getLocation();
 			PlayerSession ses = plugin.playerses.get(p.getName());
-			ses.setLoc2(l);
-			Util.msg(p, "Pos2: "+l.getX()+", "+l.getY()+", "+l.getZ());
-
+			ses.setLoc1(l);
+			Util.msg(p, "Pos1: "+l.getX()+", "+l.getY()+", "+l.getZ());
 			if (!ses.hasValidSelection()) {
-				Util.msg(p, "Now you need to set position 1!");
+				Util.msg(p, "Now you need to set position 2!");
 			}
 			event.setCancelled(true);
 		}
