@@ -25,7 +25,7 @@ public abstract class BaseCmd {
 			else player = (Player) s;
 		}
 		if (!Util.hp(sender, cmdName))
-			sender.sendMessage(ChatColor.RED + "You do not have permission to use: " + ChatColor.GOLD + "/iportal " + cmdName);
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use: " + ChatColor.WHITE + "/iportal " + cmdName);
 		else if (argLength > arg.length)
 			s.sendMessage(ChatColor.RED + "Wrong usage: " + sendHelpLine());
 		else return run();
@@ -35,6 +35,6 @@ public abstract class BaseCmd {
 	public abstract boolean run();
 
 	public String sendHelpLine() {
-		return ChatColor.DARK_AQUA + "/iportal " + ChatColor.RED + cmdName + ChatColor.AQUA + " " + usage;
+		return ChatColor.DARK_PURPLE + "/iportal " + ChatColor.LIGHT_PURPLE + cmdName + ChatColor.DARK_PURPLE + " " + usage;
 	}
 }
