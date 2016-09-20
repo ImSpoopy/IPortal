@@ -26,11 +26,11 @@ public class CreateCmd extends BaseCmd {
 	public boolean run() {
 		IP plugin = IP.instance;
 		if (!plugin.playerses.containsKey(player.getName()))
-			Util.msg(player, ChatColor.RED + "You need to make a selection before making an arena!");
+			Util.msg(player, ChatColor.RED + "You need to make a selection before making a portal!");
 		else {
 			PlayerSession st = plugin.playerses.get(player.getName());
 			if (!st.hasValidSelection()) {
-				Util.msg(player, ChatColor.RED + "You need to make a selection before making an arena!");	
+				Util.msg(player, ChatColor.RED + "You need to make a selection before making a portal!");	
 			} else {
 				PortalType type = IP.data.getType(args[2]);
 				Location l = st.getLoc1();
@@ -45,7 +45,7 @@ public class CreateCmd extends BaseCmd {
 				c.set("portals." + s + ".y2", l2.getY());
 				c.set("portals." + s + ".z2", l2.getZ());
 				c.set("portals." + s + ".type", type.name());
-				IP.data.saveCustomConfig();
+				IP.data.save();
 				
 				Bound b = new Bound(player.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ(), l2.getBlockX(), l2.getBlockY(), l2.getBlockZ());
 				new PortalCreation(b);
