@@ -1,6 +1,7 @@
 package me.minebuilders.portal.listeners;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.minebuilders.portal.IP;
 import me.minebuilders.portal.Status;
@@ -26,12 +27,12 @@ public class PortalListener implements Listener {
 	private IP plugin;
 	private BlockFace[] faces = new BlockFace[] {BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH};
 	private ArrayList<String> delays = new ArrayList<String>();
+	private List<String>  whitelist = new ArrayList<String>();
 
 	public PortalListener(IP instance) {
 		plugin = instance;
 		delays.clear();
 	} 
-
 	@EventHandler
 	public void onTeleport(PlayerPortalEvent event) {
 		Player p = event.getPlayer();
@@ -42,7 +43,6 @@ public class PortalListener implements Listener {
 			}
 		}
 	}
-
 	@EventHandler
 	public void onTeleport(EntityPortalEnterEvent event) {
 		Entity e = event.getEntity();
@@ -51,24 +51,25 @@ public class PortalListener implements Listener {
 			Vector l = getNearLoc(Material.PORTAL, p.getLocation()).toVector();
 			for (final Portal portal : plugin.portals) {
 				if (portal.isInRegion(l)) {
-					if (!delays.contains(p.getName())) {
-						if (portal.getStatus() == Status.RUNNING) {
-							Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-								@Override
-								public void run() {
-									portal.Teleport(p); //Delay, cannot teleport on movement events!
-								}
-							}, 5L);
-						} else {
-							Util.msg(p, "&cSorry, this portal is currently " + portal.getStatus().getName() + "&c!");
+					if (!delays.contains(p.getName())) {//Make sure player is out of delay.
+						if (!whitelist.contains(p.getName())) { // Incase a player joins and is in a portal.
+							if (portal.getStatus() == Status.RUNNING) {
+								Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+									@Override
+									public void run() {
+										portal.Teleport(p); //Delay, cannot teleport on movement events!
+									}
+								}, 5L);
+							} else {
+								Util.msg(p, "&cSorry, this portal is currently " + portal.getStatus().getName() + "&c!");
+							}
+							delay(p.getName()); //This event is probably fired every tick for a player in a portal, delaying is ESSENTIAL!
 						}
-						delay(p.getName()); //This event is probably fired every tick for a player in a portal, delaying is ESSENTIAL!
 					}
 				}
 			}
 		}
 	}
-
 	private void delay(final String s) {
 		delays.add(s);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -78,20 +79,26 @@ public class PortalListener implements Listener {
 			}
 		}, 30L);
 	}
-
-
+	private void whitelist(final String s) {
+		whitelist.add(s);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			@Override
+			public void run() {
+				whitelist.remove(s);
+			}
+		}, 5 * 20L);
+	}
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerjoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
 		Block b = p.getWorld().getBlockAt(p.getLocation()); 
-
+		whitelist(p.getName()); //Add player to teleportation-deny whitelist. (Else they will be stuck in a loop)
 		for(BlockFace face: faces) {
 			if (b.getRelative(face).getType().equals(Material.PORTAL)) {
 				p.teleport(getNearLoc(Material.AIR, b.getLocation()));
 			}
 		}
 	}
-
 	private Location getNearLoc(Material mat, Location l) {
 		Block b = l.getBlock();
 		for (BlockFace bf : faces) {
