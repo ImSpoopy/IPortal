@@ -15,9 +15,9 @@ public class ListCmd extends BaseCmd {
 	@Override
 	public boolean run() {
 		IP plugin = IP.instance;
-		Util.msg(sender, "&bPortals:");
+		Util.msg(sender, "&dPortals:");
 		for (Portal p : plugin.portals) {
-			Util.msg(sender, "&4 - &b"+p.getName() + "  Status: " + p.getStatus().getName());
+			Util.msg(sender, "&5 - &d"+p.getName() + "  Status: " + p.getStatus().getName());
 		}
 		return true;
 	}
