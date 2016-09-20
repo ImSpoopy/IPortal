@@ -25,8 +25,9 @@ public class SetToCmd extends BaseCmd {
 			if (p.getName().equalsIgnoreCase(name)) {
 				PortalType type = p.getType();
 				String data = "";
-				
-				if ((type == PortalType.BUNGEE || type == PortalType.CMD) && args.length >= 3) {
+				if (type == PortalType.BUNGEE && args.length >= 3) {
+					data = args[2];
+				} else if (type == PortalType.CMD && args.length >= 3) { 
 					data = Util.trim(args, 1);
 				} else if (type == PortalType.DEFAULT) {
 					data = IP.data.compressLoc(player.getLocation());
@@ -41,7 +42,7 @@ public class SetToCmd extends BaseCmd {
 
 				p.setTarget(data);
 				IP.data.getConfig().set("portals." + name + ".tpto", data);
-				IP.data.saveCustomConfig();
+				IP.data.save();
 
 				Util.msg(player, "&a" + name + "'s target has been set!");
 				p.setStatus(Status.RUNNING);
