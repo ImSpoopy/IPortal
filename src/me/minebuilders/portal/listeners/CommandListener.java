@@ -28,11 +28,11 @@ public class CommandListener implements CommandExecutor {
 
 	public boolean onCommand(CommandSender s, Command command, String label, String[] args) {
 		if (args.length == 0 || getCmdInstance(args[0]) == null) {
-			s.sendMessage(ChatColor.DARK_AQUA + "-------------(" + ChatColor.AQUA + ChatColor.BOLD + "Your IPortal Commands" + ChatColor.DARK_AQUA + ")-------------");
+			s.sendMessage(ChatColor.DARK_GRAY + "-------------(" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Your IPortal Commands" + ChatColor.DARK_GRAY + ")-------------");
 			for (BaseCmd cmd : cmds) {
-				if (Util.hp(s, cmd.cmdName)) s.sendMessage(ChatColor.DARK_RED + "  - " + cmd.sendHelpLine());
+				if (Util.hp(s, cmd.cmdName)) s.sendMessage(ChatColor.DARK_PURPLE + "  - " + cmd.sendHelpLine());
 			}
-			s.sendMessage(ChatColor.DARK_AQUA + "---------------------------------------------------");
+			s.sendMessage(ChatColor.DARK_GRAY + "---------------------------------------------------");
 		} else getCmdInstance(args[0]).processCmd(s, args);
 		return true;
 	}
