@@ -29,7 +29,7 @@ public class DeleteCmd extends BaseCmd {
 					l.getBlock().breakNaturally();
 				}
 				IP.data.getConfig().set("portals." + name, null);
-				IP.data.saveCustomConfig();
+				IP.data.save();
 				Util.msg(player, "&a" + name + " has been deleted!");
 			}
 		}
